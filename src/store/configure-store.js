@@ -1,13 +1,17 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { createLogger } from 'redux-logger'
+import createSagaMiddleware from 'redux-saga'
 
 import persons from '../modules/persons'
+import rootSaga from '../sagas'
 
 const reducer = combineReducers({
   persons
 })
 
-const middlewares = []
+const sagaMiddleware = createSagaMiddleware()
+
+const middlewares = [sagaMiddleware]
 
 if (process.env.NODE_ENV === 'development') {
   // we just want the logger for development
@@ -16,5 +20,10 @@ if (process.env.NODE_ENV === 'development') {
 
 export default function configureStore() {
   const createStoreWithMiddleware = applyMiddleware(...middlewares)(createStore)
-  return createStoreWithMiddleware(reducer)
+  const store = {
+    ...createStoreWithMiddleware(reducer),
+    runSaga: sagaMiddleware.run
+  }
+  store.runSaga(rootSaga)
+  return store
 }
