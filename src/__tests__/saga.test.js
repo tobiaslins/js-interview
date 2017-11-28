@@ -1,8 +1,8 @@
-import api from './api'
+import api from '../api'
 
-import { savePerson } from './modules/persons'
+import { savePerson } from '../modules/persons'
 
-import configureStore from './store/configure-store'
+import configureStore from '../store/configure-store'
 
 const store = configureStore()
 
