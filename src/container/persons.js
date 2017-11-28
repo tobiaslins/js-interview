@@ -4,17 +4,23 @@ import { connect } from 'react-redux'
 import { savePerson } from '../modules/persons'
 
 const renderPerson = (p, setName) => (
-  <li>
-    {p.name}
-    <button onClick={() => setName(p.id, 'Johnny')}>Set my name</button>
-  </li>
+  <div style={{ borderBottom: '1px solid grey', padding: 5 }}>
+    Name '{p.name}'
+    <button style={{ marginLeft: 5 }} onClick={() => setName(p.id, 'Johnny')}>
+      Set my name
+    </button>
+  </div>
 )
 
 // a stateless component which renders the list of persons and allows to add new
 const Persons = ({ persons, addPerson, setName }) => (
   <div>
-    <button onClick={addPerson}>Add Person</button>
-    <ul>{persons.map(person => renderPerson(person, setName))}</ul>
+    <button style={{ margin: 10 }} onClick={addPerson}>
+      Add Person
+    </button>
+    <div style={{ border: '1px solid grey' }}>
+      {persons.map(person => renderPerson(person, setName))}
+    </div>
   </div>
 )
 
